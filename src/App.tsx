@@ -10,8 +10,9 @@ import {
 import './App.css';
 import ShinCodeContext from './main';
 import SomeChild from './SomeChild';
+import useLocalStorage from './UseLocalStorage';
 
-const reducer = (state, action) => {
+const reducer = (state: number, action: { type: any }) => {
   switch (action.type) {
     case 'increment':
       return state + 1;
@@ -75,6 +76,9 @@ function App() {
     alert('これは重い処理です。');
   }, [counter]);
 
+  //カスタムフック
+  const [age, setAge] = useLocalStorage('age', 24);
+
   return (
     <>
       <div className='App'>
@@ -109,6 +113,11 @@ function App() {
         <hr />
         <h1>useCallBack</h1>
         <SomeChild showCount={showCount} />
+
+        <hr />
+        <h1>カスタムフック</h1>
+        <p>{age}</p>
+        <button onClick={() => setAge(80)}>年齢をセット</button>
       </div>
     </>
   );
