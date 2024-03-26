@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -8,6 +9,7 @@ import {
 } from 'react';
 import './App.css';
 import ShinCodeContext from './main';
+import SomeChild from './SomeChild';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -61,6 +63,18 @@ function App() {
     return count02 * count02;
   }, [count02]);
 
+  //useCallBack 関数のメモ化
+  //とりあえずふわっとしてイメージだけ
+  const [counter, setCounter] = useState(0);
+
+  // const showCount = () => {
+  //   alert('これは重い処理です。');
+  // };
+
+  const showCount = useCallback(() => {
+    alert('これは重い処理です。');
+  }, [counter]);
+
   return (
     <>
       <div className='App'>
@@ -91,6 +105,10 @@ function App() {
         <div>結果：{square}</div>
         <button onClick={() => setCount01(count01 + 1)}>＋</button>
         <button onClick={() => setCount02(count02 + 1)}>＋</button>
+
+        <hr />
+        <h1>useCallBack</h1>
+        <SomeChild showCount={showCount} />
       </div>
     </>
   );
